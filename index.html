@@ -91,10 +91,8 @@
                         document.getElementById('time').innerText = getFormattedSecondsUntil(10, 45);
                     } else if (now >= '13:30:00' && now < '14:45:00') {
                         document.getElementById('time').innerText = getFormattedSecondsUntil(14, 45);
-                    } else if (now >= '14:45:00') {
-                        document.getElementById('time').innerText = '@ 13:30:00';
                     } else {
-                        document.getElementById('time').innerText = '@ 09:00:00';
+                        document.getElementById('time').innerHTML = '09:00:00<br>13:30:00';
                     }
 
                     setTimeout(update, 1000);
@@ -105,4 +103,3 @@
         </script>
     </body>
 </html>
-
