@@ -1,0 +1,108 @@
+<!-- quick and dirty counter... don't look :) -->
+<html>
+    <head>
+        <style>
+            html, body, #container, #placeholder {
+                height: 100%;
+                background: linear-gradient(#515151, #181818);
+            }
+
+            #container {
+                text-align: center;
+            }
+
+            #content, #placeholder {
+                display:inline-block;
+                vertical-align: middle;
+            }
+
+            #content span {
+                font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+                text-shadow: 2px 2px #181818;
+            }
+
+            .header {
+                display: block;
+                margin: 0 auto;
+                text-align: center;
+
+                font-size: 8em;
+                color: #AE8E2D;
+                margin-bottom: 1em;
+            }
+
+            .timer {
+                display: block;
+                margin: auto auto;
+                text-align: center;
+
+                font-size: 12em;
+                color: #FEC939;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="container">
+            <span id="content">
+                <span class="header">Power Block Time</span>
+                <span id="time" class="timer">Content 2</span>
+            </span>
+
+            <span id="placeholder"></span>
+        </div>
+
+        <script>
+
+            (function() {
+                function pad(num) {
+                    return ("0" + num).slice(-2);
+                }
+
+                function getFormattedSecondsUntil(hour, minute) {
+                    var from = new Date();
+                    var to = new Date(from.getFullYear(), from.getMonth(), from.getDate(), hour, minute, 0, 0, 0, 0);
+                    var totalSeconds = parseInt((to.getTime() - from.getTime()) / 1000);
+
+                    var hours, minutes = 0;
+
+                    if (totalSeconds >= 3600) {
+                        hours = Math.floor(totalSeconds / 3600);
+                        totalSeconds = totalSeconds % 3600;
+                    } else  {
+                        hours = '00';
+                    }
+
+                    if (totalSeconds >= 60) {
+                        minutes = Math.floor(totalSeconds / 60);
+                        totalSeconds = totalSeconds % 60;
+                    } else {
+                        minutes = '00';
+                    }
+
+                    return pad(hours) + ':' + pad(minutes) + ':' + pad(totalSeconds);
+                }
+
+                function update() {
+                    var date = new Date();
+                    var now = pad(date.getHours()) + ':' + pad(date.getMinutes()) + ':' + pad(date.getSeconds());
+
+                    if (now >= '09:00:00' && now < '10:45:00') {
+                        document.getElementById('time').innerText = getFormattedSecondsUntil(10, 45);
+                    } else if (now >= '13:30:00' && now < '14:45:00') {
+                        document.getElementById('time').innerText = getFormattedSecondsUntil(14, 45);
+                    } else if (now >= '14:45:00') {
+                        document.getElementById('time').innerText = '@ 13:30:00';
+                    } else {
+                        document.getElementById('time').innerText = '@ 09:00:00';
+                    }
+
+                    setTimeout(update, 1000);
+                }
+
+                update();
+            })();
+        </script>
+    </body>
+</html>
+
